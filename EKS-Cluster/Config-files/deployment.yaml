@@ -4,20 +4,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: react-app  # Change this to your desired deployment name
+  name: reactjs-app
 spec:
-  replicas: 1  # You can adjust the number of replicas for scaling
+  replicas: 2
   selector:
     matchLabels:
-      app: react-app  # This should match the label in the pod template
+      app: reactjs-app
   template:
     metadata:
       labels:
-        app: react-app  # Matches the selector
+        app: reactjs-app
     spec:
       containers:
-      - name: react-app
-        image: 400864272903.dkr.ecr.ap-south-1.amazonaws.com/ci-projectdemo:v1  # Replace placeholders
+      - name: reactjs-app
+        image: 400864272903.dkr.ecr.ap-south-1.amazonaws.com/project-demo/project-demo:latest
         ports:
-        - containerPort: 80  # You can adjust the port if needed
+        - containerPort: 80
 
