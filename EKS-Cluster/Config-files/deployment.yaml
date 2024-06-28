@@ -1,0 +1,38 @@
+# (Replace with steps to build and push your ReactJS application image to ECR)
+
+# # Commented out as deployment will be done using kubectl or Helm after EKS provisioning
+
+ resource "kubernetes_deployment" "ci-projectdemo" {
+   metadata {
+     name = "ci-projectdemo"
+   }
+ 
+   spec {
+     replicas = 1
+ 
+     selector {
+       match_labels = {
+         app = "ci-projectdemo"
+       }
+     }
+ 
+     template {
+       metadata {
+         labels = {
+           app = "ci-projectdemo"
+         }
+       }
+ 
+       spec {
+         container {
+           name  = "ci-projectdemo"
+           image = "400864272903.dkr.ecr.ap-south-1.amazonaws.com/ci-projectdemo:v1"  # Update with your image tag
+ 
+           port {
+             container_port = 3000
+           }
+         }
+       }
+     }
+   }
+ }

@@ -1,0 +1,22 @@
+# EKS cluster service file, for accessing
+
+resource "kubernetes_service" "ci-projectdemo-service" {
+  metadata {
+    name = "ci-projectdemo-service"
+  }
+
+  spec {
+    selector = {
+      app = "ci-projectdemo"
+    }
+
+    ports {
+      protocol = "TCP"
+      port = 80
+      targetPort = 3000
+    }
+
+    type = "LoadBalancer"  # Adjust based on your needs
+  }
+}
+
