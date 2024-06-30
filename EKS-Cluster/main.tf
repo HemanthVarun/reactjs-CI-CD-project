@@ -1,12 +1,3 @@
-terraform {
-  required_providers {
-    kubernetes = {
-      source  = "hashicorp/kubernetes"
-      version = ">= 2.0"
-    }
-  }
-}
-
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
 
@@ -35,13 +26,14 @@ module "vpc" {
     "kubernetes.io/cluster/my-eks-cluster" = "shared"
     "kubernetes.io/role/internal-elb"      = 1
   }
+
 }
 
 module "eks" {
   source = "terraform-aws-modules/eks/aws"
 
   cluster_name    = "my-eks-cluster"
-  cluster_version = "1.27"
+  cluster_version = "1.24"
 
   cluster_endpoint_public_access = true
 
@@ -51,7 +43,7 @@ module "eks" {
   eks_managed_node_groups = {
     nodes = {
       min_size     = 1
-      max_size     = 2
+      max_size     = 3
       desired_size = 2
 
       instance_type = ["t2.small"]
@@ -61,41 +53,5 @@ module "eks" {
   tags = {
     Environment = "dev"
     Terraform   = "true"
-  }
-}
-
-data "aws_eks_cluster" "cluster" {
-  name = module.eks.cluster_id
-}
-
-data "aws_eks_cluster_auth" "cluster" {
-  name = module.eks.cluster_id
-}
-
-provider "kubernetes" {
-  host                   = data.aws_eks_cluster.cluster.endpoint
-  cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority[0].data)
-  token                  = data.aws_eks_cluster_auth.cluster.token
-}
-
-data "aws_eks_node_group" "nodes" {
-  cluster_name    = module.eks.cluster_name
-  node_group_name = "nodes"
-}
-
-resource "kubernetes_config_map" "aws_auth" {
-  metadata {
-    name      = "aws-auth"
-    namespace = "kube-system"
-  }
-
-  data = {
-    mapRoles = <<-EOT
-    - rolearn: ${data.aws_eks_node_group.nodes.node_role_arn}
-      username: system:node:{{EC2PrivateDNSName}}
-      groups:
-        - system:bootstrappers
-        - system:nodes
-    EOT
   }
 }
