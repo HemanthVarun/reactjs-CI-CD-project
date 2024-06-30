@@ -70,6 +70,11 @@ provider "kubernetes" {
   token                  = data.aws_eks_cluster_auth.cluster.token
 }
 
+data "aws_eks_node_group" "nodes" {
+  cluster_name    = module.eks.cluster_name
+  node_group_name = "nodes"
+}
+
 resource "kubernetes_config_map" "aws_auth" {
   metadata {
     name      = "aws-auth"
@@ -78,7 +83,7 @@ resource "kubernetes_config_map" "aws_auth" {
 
   data = {
     mapRoles = <<-EOT
-    - rolearn: ${module.eks.eks_managed_node_group_arn}
+    - rolearn: ${data.aws_eks_node_group.nodes.node_role_arn}
       username: system:node:{{EC2PrivateDNSName}}
       groups:
         - system:bootstrappers
