@@ -14,12 +14,12 @@ pipeline {
             }
         }
 
-        stage('Deploying Nginx Application') {
+        stage('Deploying ReactJS Application') {
             steps {
                 script {
                     dir('EKS-Cluster/Config-files') {
                         // Update kubeconfig to point to EKS cluster
-                        sh 'aws eks update-kubeconfig --name my-eks-cluster'
+                        sh 'aws eks update-kubeconfig --name my-eks-cluster1'
 
                         // Apply Kubernetes manifests
                         sh 'kubectl apply -f deployment.yaml'
