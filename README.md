@@ -70,8 +70,11 @@ Citations:
 
 
 
+
+
+
 # CloudFormation Approach 
-# EKS Cluster Creation and Deployment Pipeline
+## EKS Cluster Creation and Deployment Pipeline
 
 ## Introduction
 This documentation outlines the process of creating an Amazon Elastic Kubernetes Service (EKS) cluster using AWS CloudFormation and deploying an application using a Jenkins pipeline.
