@@ -1,0 +1,20 @@
+# # Commented out as deployment will be done using kubectl or Helm after EKS provisioning
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: project-demo
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: project-demo
+  template:
+    metadata:
+      labels:
+        app: project-demo
+    spec:
+      containers:
+      - name: project-demo
+        image: 400864272903.dkr.ecr.ap-south-1.amazonaws.com/project-demo/project-demo:latest
+        ports:
+        - containerPort: 80
