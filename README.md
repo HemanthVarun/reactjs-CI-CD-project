@@ -37,6 +37,8 @@ git clone https://github.com/HemanthVarun/reactjs-CI-CD-project.git
 ```bash
 cd reactjs-CI-CD-project
 ```
+### Creating an ec2-instance
+The directory called Jenkins-server, which has a been configured to create an ec2 instance, following the terraform commands with necessary installations.
 
 ### Setting up the Jenkins Pipeline
 1. Create a new Jenkins pipeline job.
@@ -65,9 +67,6 @@ This project is licensed under the [MIT License](LICENSE).
 Citations:
 [1] https://github.com/HemanthVarun/reactjs-CI-CD-project
 [2] https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/9005932/8693ed89-423e-4eae-8fe7-167c6d1adc38/paste.txt
-
-
-
 
 
 
