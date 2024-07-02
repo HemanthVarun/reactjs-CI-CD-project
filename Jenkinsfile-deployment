@@ -22,10 +22,8 @@ pipeline {
                         sh 'aws eks update-kubeconfig --name my-eks-cluster'
 
                         // Apply Kubernetes manifests
-                        sh 'kubectl apply -f wordpress.yaml'
-                        sh 'kubectl apply -f pv_wordpress.yaml'
-                        sh 'kubectl apply -f pv.yaml'
-                        sh 'kubectl apply -f mysql_deployment.yaml'
+                        sh 'kubectl apply -f deployment.yaml'
+                        sh 'kubectl apply -f service.yaml'
                     }
                 }
             }
