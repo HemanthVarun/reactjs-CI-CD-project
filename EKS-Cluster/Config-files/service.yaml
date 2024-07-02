@@ -1,13 +1,12 @@
 # EKS cluster service file, for accessing
-
 apiVersion: v1
 kind: Service
 metadata:
-  name: reactjs-app
+  name: nginx-service
 spec:
   type: LoadBalancer
   ports:
   - port: 80
     targetPort: 80
   selector:
-    app: reactjs-app
+    app: nginx
