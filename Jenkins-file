@@ -1,0 +1,34 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout SCM') {
+            steps {
+                script {
+                    checkout scmGit(
+                        branches: [[name: '*/main']],
+                        extensions: [],
+                        userRemoteConfigs: [[url: 'https://github.com/HemanthVarun/reactjs-CI-CD-project.git']]
+                    )
+                }
+            }
+        }
+
+        stage('Deploying ReactJS Application') {
+            steps {
+                script {
+                    dir('EKS-Cluster/Config-files') {
+                        // Update kubeconfig to point to EKS cluster
+                        sh 'aws eks update-kubeconfig --name my-eks-cluster'
+
+                        // Apply Kubernetes manifests
+                        sh 'kubectl apply -f wordpress.yaml'
+                        sh 'kubectl apply -f pv_wordpress.yaml'
+                        sh 'kubectl apply -f pv.yaml'
+                        sh 'kubectl apply -f mysql_deployment.yaml'
+                    }
+                }
+            }
+        }
+    }
+}
